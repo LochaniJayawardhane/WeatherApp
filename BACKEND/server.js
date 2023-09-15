@@ -7,6 +7,10 @@ const app = express();
 const cron = require('node-cron');
 require('dotenv').config();
 
+// Import and use your route files here
+const userRoutes = require('./routes/userRoutes');
+const emailRoutes = require('./routes/emailRoutes');
+
 const PORT = process.env.PORT || 8070;
 
 app.use(cors());
@@ -20,6 +24,9 @@ const connection = mongoose.connection;
 connection.once('open', () => {
   console.log('Mongodb connection success!');
 });
+
+app.use('/users', userRoutes);
+app.use('/email', emailRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on port number: ${PORT}`);
